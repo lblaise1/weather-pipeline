@@ -16,12 +16,11 @@ services:
 
   af:
     container_name: airflow_container
-    image: apache/airflow:3.0.0
+    image: weather-airflow:0.1.0
     ports:
       - "8000:8080"
     environment:
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@db:5432/airflow_db
-      _PIP_ADDITIONAL_REQUIREMENTS: "psycopg2-binary requests python-dotenv"
       WEATHERSTACK_API_KEY: ${WEATHERSTACK_API_KEY}
     volumes:
       - ./airflow/dags:/opt/airflow/dags
