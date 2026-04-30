@@ -1,0 +1,26 @@
+# my_project:
+#   outputs:
+#     dev:
+#       dbname: db
+#       host: db
+#       password: db_password   # ← was "pass"
+#       port: 5432
+#       schema: dev
+#       threads: 4
+#       type: postgres
+#       user: db_user
+#   target: dev
+
+
+my_project:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: db
+      port: 5432
+      user: "{{ env_var('POSTGRES_USER') }}"
+      password: "{{ env_var('POSTGRES_PASSWORD') }}"
+      dbname: "{{ env_var('POSTGRES_DB') }}"
+      schema: dev
+      threads: 4

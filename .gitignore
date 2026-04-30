@@ -12,9 +12,10 @@ build/
 # Environments
 .env
 .venv
+!.env.example 
 venv/
 env/
-*.env
+.env
 # Data — never commit raw data
 data/raw/*
 data/processed/*
@@ -33,8 +34,7 @@ models/checkpoints/*
 
 # IDE
 .vscode/
-.idea/
-*.swp
+.idea/*.swp
 *.swo
 
 # OS
@@ -50,3 +50,22 @@ output/
 # MLflow
 mlruns/
 mlartifacts/
+
+# Postgres data — actual database files
+postgres/data/
+postgres/
+
+# Virtualenv (this project uses .weather)
+.weather/
+
+# dbt artifacts
+dbt/my_project/target/
+dbt/my_project/logs/
+dbt/my_project/dbt_packages/
+
+# Compose backup files
+docker-compose copy.yml
+docker-compose*.bak
+
+# Airflow runtime
+airflow/logs/
