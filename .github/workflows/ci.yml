@@ -45,7 +45,7 @@ jobs:
           python-version: "3.12"
       - name: Install dbt
         run: pip install dbt-postgres==1.9.0
-      - name: Override host for CI (Postgres is on localhost in CI, not 'db')
+      - name: Override host for CI
         run: sed -i 's/host: db/host: localhost/' dbt/profiles.yml
       - name: dbt deps
         working-directory: dbt/my_project
