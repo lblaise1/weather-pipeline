@@ -1,17 +1,3 @@
-# my_project:
-#   outputs:
-#     dev:
-#       dbname: db
-#       host: db
-#       password: db_password   # ← was "pass"
-#       port: 5432
-#       schema: dev
-#       threads: 4
-#       type: postgres
-#       user: db_user
-#   target: dev
-
-
 my_project:
   target: dev
   outputs:

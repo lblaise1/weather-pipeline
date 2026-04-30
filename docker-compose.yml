@@ -63,7 +63,6 @@ services:
         - "8088:8088"
       environment:
         SUPERSET_SECRET_KEY: ${SUPERSET_SECRET_KEY}
-        
       volumes:
         - superset_home:/app/superset_home
       depends_on:
