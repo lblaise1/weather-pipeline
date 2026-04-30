@@ -44,7 +44,7 @@ with dag:
     task2 = DockerOperator(
         task_id ='transform_data_task',
         image= 'ghcr.io/dbt-labs/dbt-postgres:1.9.0',
-        command = 'run',
+        command = 'build',
         working_dir='/usr/app',
         environment={
             'POSTGRES_USER': PG_USER,
