@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  yaml-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install yamllint
+        run: pip install yamllint==1.35.1
+      - name: Lint YAML files
+        run: yamllint -d "{extends: relaxed, rules: {line-length: disable}}" .
+
+  dbt-parse:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:14.17
+        env:
+          POSTGRES_USER: db_user
+          POSTGRES_PASSWORD: db_password
+          POSTGRES_DB: db
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    env:
+      POSTGRES_USER: db_user
+      POSTGRES_PASSWORD: db_password
+      POSTGRES_DB: db
+      DBT_PROFILES_DIR: ${{ github.workspace }}/dbt
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dbt
+        run: pip install dbt-postgres==1.9.0
+      - name: Override host for CI (Postgres is on localhost in CI, not 'db')
+        run: sed -i 's/host: db/host: localhost/' dbt/profiles.yml
+      - name: dbt deps
+        working-directory: dbt/my_project
+        run: dbt deps
+      - name: dbt parse
+        working-directory: dbt/my_project
+        run: dbt parse
+      - name: dbt compile
+        working-directory: dbt/my_project
+        run: dbt compile
