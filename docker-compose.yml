@@ -36,7 +36,7 @@ services:
       bash -c "airflow db migrate && airflow standalone"
 
   dbt:
-      image: ghcr.io/dbt-labs/dbt-postgres:1.9.latest
+      image: ghcr.io/dbt-labs/dbt-postgres:1.9.0
       volumes:
         - ./dbt/my_project:/usr/app
         - ./dbt:/root/.dbt
