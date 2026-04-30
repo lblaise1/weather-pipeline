@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_weather_data
+    description: "Cleaned weather observations from the Weatherstack API"
+    columns:
+      - name: id
+        description: "Primary key from raw_weather_data"
+        tests:
+          - not_null
+          - unique
+      - name: city
+        tests:
+          - not_null
+      - name: temperature
+        tests:
+          - not_null
